@@ -1,23 +1,27 @@
 package by.aston.aqa;
 
 public class Park {
-    int parkId;
-    String parkName;
-    String parkWorkHours;
+    private int parkId;
+    private String parkName;
+    private String parkWorkHours;
+    private int attrCount;
+    private Attractions[] attractions;
 
     // создание конструктора класса Park
-    public Park(int parkId, String parkName, String parkWorkHours) {
+    public Park(int parkId, String parkName, String parkWorkHours, int attrCount) {
         this.parkId = parkId;
         this.parkName = parkName;
         this.parkWorkHours = parkWorkHours;
+        this.attrCount = attrCount;
+        this.attractions = new Attractions[attrCount];
     }
 
     // внутренний класс
     public static class Attractions {
-        int attrId;
-        String attrName;
-        String attrWorkHours;
-        int attrCost;
+        private int attrId;
+        private String attrName;
+        private String attrWorkHours;
+        private int attrCost;
 
         // создание конструктора внутреннего класса Attractions
         public Attractions(int attrId, String attrName, String attrWorkHours, int attrCost) {
@@ -43,6 +47,17 @@ public class Park {
         System.out.println("Название парка: " + parkName);
         System.out.println("Время работы парка: " + parkWorkHours);
         System.out.println();
+        for (int i = 0; i < this.attractions.length; i++) {
+            if (this.attractions[i] != null) this.attractions[i].infoAttr();
+        }
+    }
+
+    // метод добавления аттракциона в парк
+    public void addAttr(int id, String attrName, String attrWorkHours, int attrCost) {
+        if (id < attrCount) {
+            this.attractions[id] = new Park.Attractions(id, attrName, attrWorkHours, attrCost);
+        } else {
+            System.out.println("Нельзя добавить аттракцион");
+        }
     }
 }
-

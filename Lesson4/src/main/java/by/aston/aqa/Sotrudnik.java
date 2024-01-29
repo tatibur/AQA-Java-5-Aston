@@ -1,12 +1,12 @@
 package by.aston.aqa;
 
 public class Sotrudnik {
-    String name;
-    String position;
-    String email;
-    String number_tel;
-    int salary;
-    int age;
+    private String name;
+    private String position;
+    private String email;
+    private String number_tel;
+    private int salary;
+    private int age;
 
     // конструктор класса Sotrudnik
     public Sotrudnik(String name, String position, String email, String number_tel, int salary, int age) {
