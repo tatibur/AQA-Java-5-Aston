@@ -2,7 +2,7 @@ package by.aston.aqa;
 
 public class MainPark {
     public static void main(String[] args) {
-        Park park = new Park(1, "Луначарского А.В.", "9-18", 6);
+        Park park = new Park("Парк Луначарского А.В.", 6);
         park.addAttr(0, "Горки", "9-18", 5);
         park.addAttr(1, "Карусель", "9-18", 4);
         park.addAttr(2, "Автодром", "9-18", 10);
