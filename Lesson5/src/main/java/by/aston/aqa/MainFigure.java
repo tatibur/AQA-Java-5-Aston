@@ -1,22 +1,24 @@
 package by.aston.aqa;
+/*Применяя интерфейсы написать программу расчета периметра и площади геометрических фигур: круг, прямоугольник, треугольник.
+Задать для каждой фигуры цвет заливки и цвет границы. Результат полученных характеристик [ Периметр, площадь, цвет фона, цвет границ ] по каждой фигуре вывести в консоль.
+Попробуйте реализовать базовые методы, такие как расчет периметра фигур, в качестве дефолтных методов в интерфейсе.*/
 
 public class MainFigure {
     public static void main(String[] args) {
-        Triangle tr1 = new Triangle(2, 3, 4, 3, "жёлтый", "зелёный");
-        Rectangle rect1 = new Rectangle(2, 5, 2, 5, "голубой", "синий");
-        Circle c1 = new Circle(7, "красный", "коричневый");
+        Triangle triangle = new Triangle("Треугольник", "жёлтый", "красный");
+        Rectangle rectangle = new Rectangle("Прямоугольник", "голубой", "синий");
+        Circle circle = new Circle("Круг", "коричневый", "чёрный");
 
-        // условие
-        System.out.println("Применяя интерфейсы написать программу расчета периметра и площади геометрических фигур: круг, прямоугольник, треугольник.");
-        System.out.println("Задать для каждой фигуры цвет заливки и цвет границы.");
-        System.out.println("Результат полученных характеристик [ Периметр, площадь, цвет фона, цвет границ ] по каждой фигуре вывести в консоль.");
-        System.out.println("Попробуйте реализовать базовые методы, такие как расчет периметра фигур, в качестве дефолтных методов в интерфейсе.");
+        System.out.println(triangle.toString());
+        System.out.println("Периметр = " + triangle.getPerimeter(2, 2, 4));
+        System.out.println("Площадь = " + triangle.getArea(5, 6, 7));
         System.out.println();
-        // вывод информации о фигурах
-        tr1.TriangleInfo();
+        System.out.println(rectangle.toString());
+        System.out.println("Периметр = " + rectangle.getPerimeter(2, 2));
+        System.out.println("Площадь = " + rectangle.getArea(5, 6));
         System.out.println();
-        rect1.RectangleInfo();
-        System.out.println();
-        c1.CircleInfo();
+        System.out.println(circle.toString());
+        System.out.println("Периметр = " + circle.getPerimeter(5));
+        System.out.println("Площадь = " + circle.getArea(8));
     }
 }

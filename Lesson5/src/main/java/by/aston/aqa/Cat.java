@@ -1,46 +1,32 @@
 package by.aston.aqa;
 
 class Cat extends Animal {
-    private String name;
+    static int catCount;
     private boolean satiety; //сытость
 
-    // пустой конструктор класса Cat
-    public Cat() {
-    }
-
-    // конструктор класса Cat
     public Cat(String name) {
         super(name);
         this.name = name;
-        this.satiety = false;
+        satiety = false;
+        catCount++;
     }
 
-    // метод run
-    @Override
-    public void run(int lengthRun) {
-        if (lengthRun <= 200) {
-            System.out.print(" пробежал " + lengthRun + "м, ");
-        } else {
-            System.out.print(" устал бежать, ");
-        }
+    public static int getCatCount() {
+        return catCount;
     }
 
-    // метод swim
-    public String swim(String aWord) {
-        return ("кот не умеет плавать");
+    public void swim(int lengthSwim, int maxSwim) {
+        System.out.println("не умеет плавать;");
     }
 
-    // метод eat
     public String eat(int amount, Food food) {
-        if (this.satiety) {
-            return this.name + " сыт";
+        if (satiety) {
+            return name + " сыт";
         }
-        int gf = food.getFood();
-        if (gf >= amount) {
-            this.satiety = true;
+        if (food.getFood() >= amount) {
+            satiety = true;
             food.reduceFood(amount);
-            return this.name + " наелся (cъел " + amount + ")";
-        } else return this.name + " остался голодный";
+            return name + " наелся (cъел " + amount + ")";
+        } else return name + " остался голодный";
     }
 }
-

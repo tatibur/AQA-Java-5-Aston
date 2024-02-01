@@ -1,35 +1,35 @@
 package by.aston.aqa;
 
 public class Animal {
-    private String name;
+    String name;
     public static int count = 0;
-
-    // конструктор класса Animal
-    public Animal() {
-    }
 
     public Animal(String name) {
         this.name = name;
         count++;
     }
 
-    // метод подсчёта всех животных, котов и собак
     public static int getCount() {
         return count;
     }
 
-    // метод вывода информации о животных
     public void animalInfo() {
         System.out.print(name);
     }
 
-    // метод run
-    public void run(int lengthRun) {
-        System.out.print(" пробежал " + lengthRun + "м, ");
+    public void run(int lengthRun, int maxRun) {
+        if (lengthRun < maxRun) {
+            System.out.print(" пробежал " + lengthRun + "м, ");
+        } else {
+            System.out.print(" не может столько бежать, ");
+        }
     }
 
-    // метод swim
-    public void swim(int lengthSwim) {
-        System.out.println("проплыл " + lengthSwim + "м, ");
+    public void swim(int lengthSwim, int maxSwim) {
+        if (lengthSwim < maxSwim) {
+            System.out.println("проплыл " + lengthSwim + "м; ");
+        } else {
+            System.out.println("не может столько плыть.");
+        }
     }
 }

@@ -1,31 +1,18 @@
 package by.aston.aqa;
 
-public class Triangle implements InterfaceTriangle {
-    String colorFon;
-    String colorGraniz;
-    int a, b, c, h;
-
-    // конструктор класса Triangle
-    public Triangle(int a, int b, int c, int h, String colorFon, String colorGraniz) {
-        this.a = a;
-        this.b = b;
-        this.c = c;
-        this.h = h;
-        this.colorFon = colorFon;
-        this.colorGraniz = colorGraniz;
+public class Triangle extends Figure {
+    public Triangle(String name, String colorFigure, String colorBorder) {
+        super(name, colorFigure, colorBorder);
+        this.name = name;
+        this.colorFigure = colorFigure;
+        this.colorBorder = colorBorder;
     }
 
-    // метод нахождения площади треугольника
-    public int square(int a, int h) {
-        return a * h / 2;
+    public double getPerimeter(int side1, int side2, int side3) {
+        return side1 + side2 + side3;
     }
 
-    // метод вывод информации о треугольнике
-    public void TriangleInfo() {
-        System.out.println("Периметр треугольника = " + perimeter(this.a, this.b, this.c));
-        System.out.println("Площадь треугольника = " + square(this.a, this.h));
-        System.out.println("Цвет заливки треугольника " + colorFon);
-        System.out.println("Цвет границ треугольника " + colorGraniz);
+    public double getArea(int side1, int side2, int side3) {
+        return Math.sqrt(((double) (side1 + side2 + side3) / 2) * (((double) (side1 + side2 + side3) / 2) - side1) * (((double) (side1 + side2 + side3) / 2) - side2) * (((double) (side1 + side2 + side3) / 2) - side3));
     }
-
 }
