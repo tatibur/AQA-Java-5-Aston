@@ -5,10 +5,10 @@
 public class MainPhone {
     public static void main(String[] args) {
         Phone telefon = new Phone();
-        telefon.add("Ivanov", "291111111");
-        telefon.add("Petrov", "292222222");
-        telefon.add("Sidorov", "293333333");
-        telefon.add("Ivanov", "294444444");
+        telefon.add("291111111", "Ivanov");
+        telefon.add("292222222", "Petrov");
+        telefon.add("293333333", "Sidorov");
+        telefon.add("294444444", "Ivanov");
 
         System.out.println("Ivanov: " + telefon.get("Ivanov"));
         System.out.println("Petrov: " + telefon.get("Petrov"));
