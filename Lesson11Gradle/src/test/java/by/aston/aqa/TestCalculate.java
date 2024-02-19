@@ -1,20 +1,16 @@
+/* Создайте ветку Lesson_11_gradle, в ней создайте проект, используя Gradle.
+В каждый проект добавьте зависимости на такие инструменты как JUnit 5, Selenium.*/
 package by.aston.aqa;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestCalculate {
 
     @Test
     void Sum() {
-
-        double num1 = 3.5;
-        double num2 = 2.0;
-        double expectedValue = 5.5;
-
-        double sum = Calculate.Add(num1, num2);
-
-        Assertions.assertEquals(expectedValue, sum);
+        assertEquals(5.5, Calculate.Add(3.5, 2.0));
     }
 
 }
