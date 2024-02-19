@@ -12,5 +12,4 @@ public class TestCalculate {
     void Sum() {
         assertEquals(5.5, Calculate.Add(3.5, 2.0));
     }
-
 }
