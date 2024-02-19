@@ -9,12 +9,6 @@ import org.junit.jupiter.api.Test;
 public class TestCalculate {
     @Test
     void Sum() {
-        double num1 = 3.5;
-        double num2 = 2.0;
-        double expectedValue = 5.5;
-
-        double sum = Calculate.Add(num1, num2);
-
-        assertEquals(expectedValue, sum);
+       assertEquals(5.5, Calculate.Add(3.5, 2.0));
     }
 }
