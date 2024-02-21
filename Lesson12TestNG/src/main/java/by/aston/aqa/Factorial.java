@@ -7,7 +7,7 @@ public class Factorial {
         } else if (n > 1) {
             return n * getFactorial(n - 1);
         } else {
-            throw new FactorialException("Число меньше 1");
+            throw new FactorialException("Число меньше 0");
         }
     }
 }
