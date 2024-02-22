@@ -1,19 +1,28 @@
 package by.aston.aqa;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class FactorialTest {
+
     @Test
-    @DisplayName("Тест1")
-    public void Assert1() {
-        Assertions.assertEquals(1, Factorial.getFactorial(1));
+    public void Test1() throws FactorialException {
+        Assertions.assertEquals(2, Factorial.getFactorial(2));
     }
 
     @Test
-    @DisplayName("Тест2")
-    public void Assert2() {
-        Assertions.assertEquals(2, Factorial.getFactorial(2));
+    public void Test2() throws FactorialException {
+        Assertions.assertEquals(1, Factorial.getFactorial(0));
+    }
+
+    @Test
+    public void Test3() {
+        boolean exceptionThrown = false;
+        try {
+            Factorial.getFactorial(-1);
+        } catch (FactorialException e) {
+            exceptionThrown = true;
+        }
+        Assertions.assertTrue(exceptionThrown);
     }
 }
