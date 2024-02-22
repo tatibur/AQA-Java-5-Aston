@@ -1,3 +1,5 @@
+/* Создайте ветку Lesson_12_testng. Напишите программу, позволяющую вычислить факториал числа.
+В ветке Lesson_12_testng  напишите юнит-тесты, используя TestNG. */
 package by.aston.aqa;
 
 public class FactorialMain {
