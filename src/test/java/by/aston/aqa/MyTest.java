@@ -137,6 +137,7 @@ public class MyTest {
 
         driver.quit();
     }
+
     @Test
     public void TestFieldsSum() {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
