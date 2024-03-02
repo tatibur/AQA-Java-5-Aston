@@ -1,9 +1,9 @@
-/*Необходимо написать автотесты для сайта mts.by.
-Суть тестов заключается в проверке блока «Онлайн пополнение без комиссии»:
-Проверить название указанного блока;
-Проверить наличие логотипов платёжных систем;
-Проверить работу ссылки «Подробнее о сервисе»;
-Заполнить поля и проверить работу кнопки «Продолжить» (проверяем только вариант «Услуги связи», номер для теста 297777777)*/
+/*Продолжим работу над блоком «Онлайн пополнение без комиссии» сайта mts.by.
+Проверить надписи в незаполненных полях каждого варианта оплаты услуг:
+услуги связи, домашний интернет, рассрочка, задолженность;
+Для варианта «Услуги связи» заполнить поля в соответствии с пререквизитами из предыдущей темы,
+нажать кнопку «Продолжить» и в появившемся окне проверить корректность отображения суммы (в том числе на кнопке),
+номера телефона, а также надписей в незаполненных полях для ввода реквизитов карты, наличие иконок платёжных систем.*/
 package by.aston.aqa;
 
 import org.junit.jupiter.api.Assertions;
@@ -12,10 +12,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
 public class MyTest {
+    final String testTel = "297777777";
+    final String testSum = "10.50";
+
     @Test
     public void TestCommunicationServices() {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
@@ -132,6 +137,70 @@ public class MyTest {
 
         driver.quit();
     }
+    @Test
+    public void TestFieldsSum() {
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        driver.get("https://mts.by");
+
+        WebElement acceptButton = driver.findElement(By.xpath("//*[@id=\"cookie-agree\"]"));
+        acceptButton.click();
+
+        WebElement inputPhone = driver.findElement(By.xpath("//*[@id=\"connection-phone\"]"));
+        inputPhone.click();
+        inputPhone.sendKeys(testTel);
+
+        WebElement inputSum = driver.findElement(By.xpath("//*[@id=\"connection-sum\"]"));
+        inputSum.click();
+        inputSum.sendKeys(testSum);
+
+        WebElement continueButton = driver.findElement(By.xpath("//*[@id=\"pay-connection\"]/button"));
+        continueButton.click();
+
+        new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.className("bepaid-iframe")));
+
+        WebElement sum = driver.findElement(By.xpath("/html/body/app-root/div/div/app-payment-container/app-header/header/div/div/div/span[1]"));
+        String valueSum = sum.getText().replaceAll("[^0-9.]", "");
+        Assertions.assertEquals(testSum, valueSum);
+
+        WebElement sumButton = driver.findElement(By.xpath("/html/body/app-root/div/div/app-payment-container/section/app-card-page/div/div[1]/button"));
+        String valueSum1 = sumButton.getText().replaceAll("[^0-9.]", "");
+        Assertions.assertEquals(testSum, valueSum1);
+
+        driver.quit();
+    }
+
+    @Test
+    public void TestFieldsTel() {
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        driver.get("https://mts.by");
+
+        WebElement acceptButton = driver.findElement(By.xpath("//*[@id=\"cookie-agree\"]"));
+        acceptButton.click();
+
+        WebElement inputPhone = driver.findElement(By.xpath("//*[@id=\"connection-phone\"]"));
+        inputPhone.click();
+        inputPhone.sendKeys(testTel);
+
+        WebElement inputSum = driver.findElement(By.xpath("//*[@id=\"connection-sum\"]"));
+        inputSum.click();
+        inputSum.sendKeys(testSum);
+
+        WebElement continueButton = driver.findElement(By.xpath("//*[@id=\"pay-connection\"]/button"));
+        continueButton.click();
+
+        new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.className("bepaid-iframe")));
+
+        WebElement tel = driver.findElement(By.className("header__payment-info"));
+        String valueTel = tel.getText().replaceAll("[^0-9]", "").substring(3);
+        Assertions.assertEquals(testTel, valueTel);
+        driver.quit();
+    }
 
     @Test
     public void TestFields() {
@@ -145,36 +214,31 @@ public class MyTest {
 
         WebElement inputPhone = driver.findElement(By.xpath("//*[@id=\"connection-phone\"]"));
         inputPhone.click();
-        inputPhone.sendKeys("297777777");
+        inputPhone.sendKeys(testTel);
 
         WebElement inputSum = driver.findElement(By.xpath("//*[@id=\"connection-sum\"]"));
         inputSum.click();
-        inputSum.sendKeys("10");
+        inputSum.sendKeys(testSum);
 
         WebElement continueButton = driver.findElement(By.xpath("//*[@id=\"pay-connection\"]/button"));
         continueButton.click();
 
-        WebElement iframe = driver.findElement(By.className("bepaid-iframe"));
-        driver.switchTo().frame(iframe);
+        new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.className("bepaid-iframe")));
 
-        WebElement inputCardNumber = driver.findElement(By.xpath("/html/body/app-root/div/div/app-payment-container/section/app-card-page/div/div[1]/app-card-input/form/div[1]/div[1]/app-input/div/div/div[1]/label"));
+        WebElement inputCardNumber = driver.findElement(By.xpath("//input[@formcontrolname=\"creditCard\"]/following-sibling::label"));
         String labelCardNumber = inputCardNumber.getText();
-        System.out.println(labelCardNumber);
         Assertions.assertEquals("Номер карты", labelCardNumber);
 
-        WebElement inputCardValidity = driver.findElement(By.xpath("/html/body/app-root/div/div/app-payment-container/section/app-card-page/div/div[1]/app-card-input/form/div[1]/div[2]/div[1]/app-input/div/div/div[1]/label"));
+        WebElement inputCardValidity = driver.findElement(By.xpath("//input[@formcontrolname=\"expirationDate\"]/following-sibling::label"));
         String labelCardValidity = inputCardValidity.getText();
-        System.out.println(labelCardValidity);
         Assertions.assertEquals("Срок действия", labelCardValidity);
 
-        WebElement inputCardCVC = driver.findElement(By.xpath("/html/body/app-root/div/div/app-payment-container/section/app-card-page/div/div[1]/app-card-input/form/div[1]/div[2]/div[3]/app-input/div/div/div[1]/label"));
+        WebElement inputCardCVC = driver.findElement(By.xpath("//input[@formcontrolname=\"cvc\"]/following-sibling::label"));
         String labelCardCVC = inputCardCVC.getText();
-        System.out.println(labelCardCVC);
         Assertions.assertEquals("CVC", labelCardCVC);
 
-        WebElement inputCardNameOwner = driver.findElement(By.xpath("/html/body/app-root/div/div/app-payment-container/section/app-card-page/div/div[1]/app-card-input/form/div[1]/div[3]/app-input/div/div/div[1]/label"));
+        WebElement inputCardNameOwner = driver.findElement(By.xpath("//input[@formcontrolname=\"holder\"]/following-sibling::label"));
         String labelCardNameOwner = inputCardNameOwner.getText();
-        System.out.println(labelCardNameOwner);
         Assertions.assertEquals("Имя держателя (как на карте)", labelCardNameOwner);
 
         WebElement logoMasterCard = driver.findElement(By.xpath("/html/body/app-root/div/div/app-payment-container/section/app-card-page/div/div[1]/app-card-input/form/div[1]/div[1]/app-input/div/div/div[2]/div/div/img[1]"));
@@ -186,7 +250,7 @@ public class MyTest {
         WebElement logoBelCard = driver.findElement(By.xpath("/html/body/app-root/div/div/app-payment-container/section/app-card-page/div/div[1]/app-card-input/form/div[1]/div[1]/app-input/div/div/div[2]/div/div/img[3]"));
         Assertions.assertTrue(logoBelCard.isDisplayed());
 
-      /*  WebElement logoMir = driver.findElement(By.xpath("/html/body/app-root/div/div/app-payment-container/section/app-card-page/div/div[1]/app-card-input/form/div[1]/div[1]/app-input/div/div/div[2]/div/div/div/img[2]"));
-        Assertions.assertTrue(logoMir.isDisplayed());*/
+        WebElement logoMir = driver.findElement(By.xpath("/html/body/app-root/div/div/app-payment-container/section/app-card-page/div/div[1]/app-card-input/form/div[1]/div[1]/app-input/div/div/div[2]/div/div/div"));
+        Assertions.assertTrue(logoMir.isDisplayed());
     }
 }
