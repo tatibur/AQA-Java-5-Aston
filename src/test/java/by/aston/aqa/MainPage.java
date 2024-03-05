@@ -9,34 +9,38 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class MainPage {
-    WebDriver driver;
+    private final WebDriver driver;
+    By firstProduct = By.xpath("(//*[@class='product-card__fast-view hide-mobile j-open-product-popup'])[1]");
+    By secondProduct = By.xpath("(//*[@class='product-card__fast-view hide-mobile j-open-product-popup'])[2]");
+    By thirdProduct = By.xpath("(//*[@class='product-card__fast-view hide-mobile j-open-product-popup'])[5]");
+    By closeButton = By.xpath("(//*[@class='j-close popup__close close'])");
+    By shoppingCart = By.xpath("(//*[@class='btn-base j-go-to-basket'])");
+    By nameFirstProduct = By.xpath("(//*[@id=\"app\"]/div[2]/div/div[2]/div/article[1]/div/div[2]/h2/span[2]");
+    By nameSecondProduct = By.xpath("(//*[@id=\"app\"]/div[2]/div/div[2]/div/article[2]/div/div[2]/h2/span[2]");
+    By nameThirdProduct = By.xpath("(//*[@id=\"app\"]/div[2]/div/div[2]/div/article[5]/div/div[2]/h2/span[2]");
+    String url = "https://www.wildberries.ru/";
 
-    MainPage(WebDriver driver) {
+    public MainPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    // метод добавления товара в корзину
-    void addToShoppingCart() throws InterruptedException {
+    void addToShoppingCart() {
         // ожидание загрузки не менее 5 элементов на главной странице
         new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//div[@class=\"product-card__wrapper\"]"), 5));
 
-        // ДОБАВЛЕНИЕ ПЕРВОГО ТОВАРА
-        // нажимаем быстрый просмотр
-        driver.findElement(By.xpath("(//*[@class='product-card__fast-view hide-mobile j-open-product-popup'])[1]")).click();
-        // выбираем размер и кладем в корзину
+        // добавление первого товара
+        driver.findElement(firstProduct).click();
         try {
             driver.findElement(By.xpath("(//*[@class='sizes-list__item'])[1]")).click();
             driver.findElement(By.xpath("//*[@class='btn-main']")).click();
         } catch (NoSuchElementException ex) {
-            // если не нужно выбирать размер - просто кладём в корзину
-            System.out.println();
+            // System.out.println();
             driver.findElement(By.xpath("//*[@class='btn-main']")).click();
         }
-        // нажимаем кнопку Закрыть
-        driver.findElement(By.xpath("(//*[@class='j-close popup__close close'])")).click();
+        driver.findElement(closeButton).click();
 
-        // ДОБАВЛЕНИЕ ВТОРОГО ТОВАРА
-        driver.findElement(By.xpath("(//*[@class='product-card__fast-view hide-mobile j-open-product-popup'])[2]")).click();
+        // добавление второго товара
+        driver.findElement(secondProduct).click();
         try {
             driver.findElement(By.xpath("(//*[@class='sizes-list__item'])[1]")).click();
             driver.findElement(By.xpath("//*[@class='btn-main']")).click();
@@ -44,10 +48,10 @@ public class MainPage {
             System.out.println();
             driver.findElement(By.xpath("//*[@class='btn-main']")).click();
         }
-        driver.findElement(By.xpath("(//*[@class='j-close popup__close close'])")).click();
+        driver.findElement(closeButton).click();
 
-        // ДОБАВЛЕНИЕ ТРЕТЬЕГО ТОВАРА
-        driver.findElement(By.xpath("(//*[@class='product-card__fast-view hide-mobile j-open-product-popup'])[5]")).click();
+        // добавление третьего товара
+        driver.findElement(thirdProduct).click();
         try {
             driver.findElement(By.xpath("(//*[@class='sizes-list__item'])[1]")).click();
             driver.findElement(By.xpath("//*[@class='btn-main']")).click();
@@ -55,15 +59,19 @@ public class MainPage {
             System.out.println();
             driver.findElement(By.xpath("//*[@class='btn-main']")).click();
         }
-        // driver.findElement(By.xpath("(//*[@class='j-close popup__close close'])")).click();
     }
 
-    // метод перехода в Корзину
     void goToShoppingCart() {
-        driver.findElement(By.xpath("(//*[@class='btn-base j-go-to-basket'])")).click();
+        driver.findElement(shoppingCart).click();
     }
 
     public void open() {
-        driver.get("https://www.wildberries.ru/");
+        driver.get(url);
+    }
+
+    void getProductNameToMainPage() {
+        driver.findElement(nameFirstProduct).getText();
+        driver.findElement(nameSecondProduct).getText();
+        driver.findElement(nameThirdProduct).getText();
     }
 }
