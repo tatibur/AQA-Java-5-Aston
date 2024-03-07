@@ -9,7 +9,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class TestPostFormData {
     @Test
-    void testFormData() {
+    void testPostMethod() {
         given()
                 .baseUri("https://postman-echo.com")
                 .when()
