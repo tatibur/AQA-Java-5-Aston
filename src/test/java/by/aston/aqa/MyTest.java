@@ -19,12 +19,13 @@ public class MyTest {
     static WebDriver driver = new ChromeDriver();
 
     @BeforeEach
-    public void initialize() {
+    public void initialize() throws InterruptedException {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get("https://mts.by");
-        //  driver.findElement(By.xpath("//*[@id='cookie-agree']")).click();
+        Thread.sleep(3000);
+        driver.findElement(By.xpath("//*[@id='cookie-agree']")).click();
     }
 
     @AfterAll
@@ -34,8 +35,6 @@ public class MyTest {
 
     @Test
     public void TestCommunicationServices() {
-        driver.findElement(By.xpath("//*[@id='cookie-agree']")).click();
-
         WebElement inputPhone = driver.findElement(By.id("connection-phone"));
         Assertions.assertTrue(inputPhone.isDisplayed());
         String placeholderPhone = inputPhone.getAttribute("placeholder");
@@ -50,8 +49,6 @@ public class MyTest {
 
     @Test
     public void TestHomeInternet() {
-        driver.findElement(By.xpath("//*[@id='cookie-agree']")).click();
-
         WebElement selectButton = driver.findElement(By.className("select__header"));
         selectButton.click();
 
@@ -71,8 +68,6 @@ public class MyTest {
 
     @Test
     public void TestInstallmentPlan() {
-        driver.findElement(By.xpath("//*[@id='cookie-agree']")).click();
-
         WebElement selectButton = driver.findElement(By.className("select__header"));
         selectButton.click();
 
@@ -91,8 +86,6 @@ public class MyTest {
 
     @Test
     public void TestDebt() {
-        driver.findElement(By.xpath("//*[@id='cookie-agree']")).click();
-
         driver.findElement(By.className("select__header")).click();
         driver.findElement(By.xpath("//div[@class='select__wrapper opened']//li[4]//p")).click();
 
@@ -109,8 +102,6 @@ public class MyTest {
 
     @Test
     public void TestFieldsSum() {
-        driver.findElement(By.xpath("//*[@id='cookie-agree']")).click();
-
         WebElement inputPhone = driver.findElement(By.xpath("//*[@id='connection-phone']"));
         inputPhone.click();
         inputPhone.sendKeys(testTel);
@@ -135,8 +126,6 @@ public class MyTest {
 
     @Test
     public void TestFieldsTel() throws InterruptedException {
-        driver.findElement(By.xpath("//*[@id='cookie-agree']")).click();
-
         WebElement inputPhone = driver.findElement(By.xpath("//*[@id='connection-phone']"));
         inputPhone.click();
         inputPhone.sendKeys(testTel);
@@ -150,7 +139,7 @@ public class MyTest {
 
         new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.className("bepaid-iframe")));
 
-        Thread.sleep(3000);
+        Thread.sleep(5000);
 
         WebElement tel = driver.findElement(By.className("header__payment-info"));
         String valueTel = tel.getText().replaceAll("[^0-9]", "").substring(3);
@@ -159,8 +148,6 @@ public class MyTest {
 
     @Test
     public void TestFields() throws InterruptedException {
-        driver.findElement(By.xpath("//*[@id='cookie-agree']")).click();
-
         WebElement inputPhone = driver.findElement(By.xpath("//*[@id='connection-phone']"));
         inputPhone.click();
         inputPhone.sendKeys(testTel);
@@ -174,7 +161,7 @@ public class MyTest {
 
         new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.className("bepaid-iframe")));
 
-        Thread.sleep(3000);
+        Thread.sleep(5000);
 
         WebElement inputCardNumber = driver.findElement(By.xpath("//div[@class='content ng-tns-c47-1']//label"));
         String labelCardNumber = inputCardNumber.getText();
